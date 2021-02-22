@@ -652,6 +652,11 @@ void DDLWorker::enqueueTask(DDLTaskPtr task_ptr)
             {
                 recoverZooKeeper();
             }
+            else if (e.code == Coordination::Error::ZNONODE)
+            {
+                LOG_ERROR(log, "ZooKeeper error: {}", getCurrentExceptionMessage(true));
+                return;
+            }
             else
             {
                 LOG_ERROR(log, "Unexpected ZooKeeper error: {}.", getCurrentExceptionMessage(true));
